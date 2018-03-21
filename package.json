@@ -1,0 +1,22 @@
+{
+  "name": "file-operation-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarathmohan007/file-operation-node.git"
+  },
+  "author": "Sarath Mohan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sarathmohan007/file-operation-node/issues"
+  },
+  "homepage": "https://github.com/sarathmohan007/file-operation-node#readme",
+  "dependencies": {
+    "yargs": "^11.0.0"
+  }
+}
