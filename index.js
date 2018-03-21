@@ -1,65 +1,81 @@
 const yarg = require('yargs');
 const fs = require('fs');
+
+
 var options = yarg.argv.options;
+var i = 1;
 
-// console.log(options);
-
-var obj = {
-    name: []
-}
-var i=1;
 if (options == 'read') {
-    var data = fs.readFileSync('name.json');
-    existdata = JSON.parse(data.toString());
-    console.log('.......Names.........');
-    existdata.name.forEach(item => {
-        console.log(i++ +' '+ item);
-    });
+    if (!fs.existsSync('name.json')) {
+        console.log("....File not found......");
+    }
+    else {
+        var data = fs.readFileSync('name.json');
+        existdata = JSON.parse(data.toString());
+        console.log('.......Names.........\n');
+        existdata.name.forEach(item => {
+            console.log(i++ + ' ' + item);
+        });
+        console.log('\n...............');
+    }
 }
+
 else if (options == 'write') {
     // console.log(yarg.argv._[0]);
     var name = yarg.argv._[0];
 
-
-    var existdata;
-    var data = fs.readFileSync('name.json');
-    existdata = JSON.parse(data.toString());
-    // console.log('exist', existdata.name);
-    // console.log('yoo', existdata);
-
-
-    existdata.name.forEach(item => {
-        obj["name"].push(item);
-    });
-
-    obj["name"].push(name);
-    // console.log(JSON.stringify(obj));
-
-    fs.writeFile('name.json', JSON.stringify(obj), function (err) {
-        if (err) throw err;
-        console.log('Saved ' + name);
-    });
+    if (!name) {
+        console.log('\nPlease provide name to add');
+    }
+    else {
+        if (!fs.existsSync('name.json')) {
+            console.log("....File not found......");
+        }
+        else {
+            var data = fs.readFileSync('name.json');
+            var existdata = JSON.parse(data.toString());
+            existdata.name.push(name);
+            fs.writeFile('name.json', JSON.stringify(existdata), function (err) {
+                if (err) throw err;
+                console.log('\nSaved ' + name + '\n');
+            });
+        }
+    }
 }
+
 else if (options == 'remove') {
     var removename = yarg.argv._[0];
-    var data = fs.readFileSync('name.json');
-    existdata = JSON.parse(data.toString());
-    var index= existdata.name.indexOf(removename)
-    // console.log('index',index);
-    if (index > -1) {
-        existdata.name.splice(index, 1);
-        console.log('Removed.........');
+    if (!removename) {
+        console.log('\nPlease provide name to remove');
     }
+    else {
+        if (!fs.existsSync('name.json')) {
+            console.log("....File not found......");
+        }
+        else {
+            var data = fs.readFileSync('name.json');
+            existdata = JSON.parse(data.toString());
+            var index = existdata.name.indexOf(removename)
+            if (index > -1) {
+                existdata.name.splice(index, 1);
+                console.log('\nRemoved ' + removename);
+            }
+            else {
+                console.log('\n Cannot Find ' + removename)
+            }
 
-    console.log('.......Names.........');
-    existdata.name.forEach(item => {
-        console.log(i++ +' '+ item);
-    });
-
-    fs.writeFile('name.json', JSON.stringify(existdata), function (err) {
-        if (err) throw err;
-        // console.log('Saved!');
-    });
-
+            console.log('\n.......Names.........\n');
+            existdata.name.forEach(item => {
+                console.log(i++ + ' ' + item);
+            });
+            console.log('\n...............');
+            fs.writeFile('name.json', JSON.stringify(existdata), function (err) {
+                if (err) throw err;
+            });
+        }
+    }
+}
+else {
+    console.log('\nInvalid Option');
 }
 
