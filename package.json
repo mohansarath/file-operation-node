@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/sarathmohan007/file-operation-node#readme",
   "dependencies": {
-    "yargs": "^11.0.0"
+    "yargs": "^13.1.0"
   }
 }
